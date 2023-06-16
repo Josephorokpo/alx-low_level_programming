@@ -19,6 +19,10 @@ int main(void)
             {
                 putchar(n + '0');
                 putchar(m + '0');
+		if (n == 57 && m == 57)
+		{
+			continue;
+		}
                 putchar(',');
                 putchar(' ');
             }

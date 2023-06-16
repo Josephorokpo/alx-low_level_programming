@@ -18,7 +18,7 @@ int main(void)
         	putchar(l);
         	i++;
     	}
-    	i = 0; // Reset i back to 0 for the second loop
+    	i = 0; /* Reset i back to 0 for the second loop */
     	for (u = 65; i < 26; u++)
     	{
         	putchar(u);

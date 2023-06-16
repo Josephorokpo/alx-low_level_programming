@@ -3,7 +3,7 @@
 /**
  * main – Entry point
  *
- * Description: Prints numbers from 0 to 9.
+ * Description: Prints numbers from 0 to 9, followed by a new line.
  *
  * Return: Always 0 (Success)
  */

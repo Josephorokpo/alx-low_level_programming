@@ -5,8 +5,7 @@
 /**
  * main - Entry point
  *
- * The program prints out n greater than 5,
- * zero, and less than 6 and not 0
+ * Description: prints zero, and less than 6 and not 0
  *
  * Return: Always 0 (Success)
  */

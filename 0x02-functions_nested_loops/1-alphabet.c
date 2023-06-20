@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * Description: Prints the alphabet, in lowercase, followed by a new line.
  *

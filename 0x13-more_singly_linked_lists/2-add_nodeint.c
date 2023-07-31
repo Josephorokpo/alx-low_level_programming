@@ -6,18 +6,18 @@
  * @head: Pointer to the pointer of the head of the linked list.
  * @n: Value to be stored in the new node.
  *
- * Return: The address of the new element, or NULL if it failed.
+ * Return: The data at the new element, or NULL if it failed.
  */
 listint_t *add_nodeint(listint_t **head, const int n)
 {
-	listint_t *new_node = malloc(sizeof(listint_t));
+	listint_t *new_node;
 
-	if (new_node == NULL)
+	new_node = malloc(sizeof(listint_t));
+	if (!new_node)
 	return (NULL);
 
-	new_node->data = n;
+	new_node->n = n;
 	new_node->next = *head;
-
 	*head = new_node;
 
 	return (new_node);

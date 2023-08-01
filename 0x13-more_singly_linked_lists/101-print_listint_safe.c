@@ -11,26 +11,24 @@
 size_t print_listint_safe(const listint_t *head)
 {
 	size_t num_nodes = 0;
-	const listint_t *current = head;
-	const listint_t *temp;
+	const listint_t *slow = head;
+	const listint_t *fast = head;
 
-	while (current)
+	while (slow && fast && fast->next)
 	{
-		printf("[%p] %d\n", (void *)current, current->n);
+		printf("[%p] %d\n", (void *)slow, slow->n);
 		num_nodes++;
 
-		if (current <= current->next)
+		slow = slow->next;
+		fast = fast->next->next;
+
+		if (slow == fast)
 		{
-			/* Print the node that causes the cycle */
-			printf("-> [%p] %d\n", (void *)current->next, current->next->n);
+			/* Cycle detected, print the node that causes the cycle */
+			printf("-> [%p] %d\n", (void *)fast, fast->n);
 			exit(98);
 		}
-
-		/* Mark the current node as visited by making it point back to itself */
-		temp = current;
-		current = current->next;
-		temp->next = (void *)temp;
 	}
 
-	return (num_nodes);
+	return num_nodes;
 }

@@ -29,5 +29,5 @@ size_t print_listint_safe(const listint_t *head)
 		current = temp;
 	}
 
-	return num_nodes;
+	return (num_nodes);
 }

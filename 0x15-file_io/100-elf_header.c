@@ -4,7 +4,6 @@
 #include <fcntl.h>
 #include <elf.h>
 
-
 /**
  * display_elf_header - Displays the information contained in the ELF header
  * at the start of an ELF file.
@@ -13,8 +12,8 @@
 void display_elf_header(const char *filename);
 
 /**
- * main - Displays the information contained in the
- * ELF header at the start of an ELF file.
+ * main - Display the information contained in the
+ * ELF header at the start of the ELF file.
  * @argc: The number of arguments supplied to the program.
  * @argv: An array of pointers to the arguments.
  *
@@ -23,7 +22,6 @@ void display_elf_header(const char *filename);
  * Description: If the file is not an ELF File or
  * the function fails - exit code 98.
  */
-
 int main(int argc, char *argv[])
 {
 	if (argc != 2)
@@ -37,10 +35,15 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
+/**
+ * display_elf_header - Displays the information contained in the ELF header.
+ * @filename: The name of the ELF file to analyze.
+ */
 void display_elf_header(const char *filename)
 {
 	int fd;
 	Elf32_Ehdr header;
+	int i; /* Declare 'i' here to comply with C90 standard */
 
 	fd = open(filename, O_RDONLY);
 
@@ -69,7 +72,7 @@ void display_elf_header(const char *filename)
 
 	printf("ELF Header:\n");
 	printf("	Magic:	");
-	for (int i = 0; i < EI_NIDENT; i++)
+	for (i = 0; i < EI_NIDENT; i++) /* Use 'i' declared earlier */
 		printf("%02x ", header.e_ident[i]);
 	printf("\n");
 

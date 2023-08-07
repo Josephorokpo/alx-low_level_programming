@@ -4,8 +4,9 @@
 
 #define BUF_SIZE 1024
 
+char *create_buffer(char *file);
 int open_file(const char *filename, int flags, mode_t mode);
-void copy_file(int fd_from, int fd_to);
+void copy_file(int fd_from, int fd_to, char *buffer);
 void close_file(int fd);
 
 /**
@@ -13,28 +14,51 @@ void close_file(int fd);
  * @argc: The number of arguments supplied to the program.
  * @argv: An array of pointers to the arguments.
  *
- * Return: 0 on success, or an exit code on failure.
+ * Return: 0 on success.
  */
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to;
+	int from, to;
+	char *buffer;
 
 	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 
-	fd_from = open_file(argv[1], O_RDONLY, 0);
+	buffer = create_buffer(argv[2]);
+	from = open_file(argv[1], O_RDONLY, 0);
+	to = open_file(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
-	fd_to = open_file(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	copy_file(from, to, buffer);
 
-	copy_file(fd_from, fd_to);
-
-	close_file(fd_from);
-	close_file(fd_to);
+	free(buffer);
+	close_file(from);
+	close_file(to);
 
 	return (0);
+}
+
+/**
+ * create_buffer - Allocates a buffer of size 1024 bytes.
+ * @file: The name of the file the buffer will be used for.
+ *
+ * Return: A pointer to the newly-allocated buffer, or NULL on failure.
+ */
+char *create_buffer(char *file)
+{
+	char *buffer;
+
+	buffer = malloc(BUF_SIZE);
+
+	if (buffer == NULL)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't allocate buffer for %s\n", file);
+		exit(EXIT_FAILURE);
+	}
+
+	return (buffer);
 }
 
 /**
@@ -52,7 +76,7 @@ int open_file(const char *filename, int flags, mode_t mode)
 	if (fd == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", filename);
-		exit(98);
+		exit(EXIT_FAILURE);
 	}
 	return (fd);
 }
@@ -61,10 +85,10 @@ int open_file(const char *filename, int flags, mode_t mode)
  * copy_file - Copies the contents of one file to another.
  * @fd_from: The file descriptor of the source file.
  * @fd_to: The file descriptor of the destination file.
+ * @buffer: The buffer used for copying.
  */
-void copy_file(int fd_from, int fd_to)
+void copy_file(int fd_from, int fd_to, char *buffer)
 {
-	char buffer[BUF_SIZE];
 	ssize_t r, w;
 
 	while ((r = read(fd_from, buffer, BUF_SIZE)) > 0)
@@ -76,7 +100,7 @@ void copy_file(int fd_from, int fd_to)
 			dprintf(STDERR_FILENO, "Error: Can't write to destination file\n");
 			close_file(fd_from);
 			close_file(fd_to);
-			exit(99);
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -85,7 +109,7 @@ void copy_file(int fd_from, int fd_to)
 		dprintf(STDERR_FILENO, "Error: Can't read from source file\n");
 		close_file(fd_from);
 		close_file(fd_to);
-		exit(98);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -98,6 +122,6 @@ void close_file(int fd)
 	if (close(fd) == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
+		exit(EXIT_FAILURE);
 	}
 }

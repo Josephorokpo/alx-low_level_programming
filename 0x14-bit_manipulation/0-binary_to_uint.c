@@ -8,22 +8,18 @@
  */
 unsigned int binary_to_uint(const char *b)
 {
-	unsigned int result = 0;
-	unsigned int digit;
+	int i;
+	unsigned int decimal_value = 0;
 
-	if (b == NULL)
+	if (!b)
 		return (0);
 
-	while (*b != '\0')
+	for (i = 0; b[i]; i++)
 	{
-		if (*b != '0' && *b != '1')
+		if (b[i] < '0' || b[i] > '1')
 			return (0);
-
-		digit = *b - '0';
-		result = (result << 1) | digit;
-
-		b++;
+		decimal_value = 2 * decimal_value + (b[i] - '0');
 	}
 
-	return (result);
+	return (decimal_value);
 }

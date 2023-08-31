@@ -14,7 +14,7 @@ void print_binary(unsigned long int n)
 	/* Iterate through the bits of the decimal number */
 	for (i = 63; i >= 0; i--)
 	{
-		current = decimal_num >> i;
+		current = n >> i;
 
 		/* Check if the current bit is 1 */
 		if (current & 1)

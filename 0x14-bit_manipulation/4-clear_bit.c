@@ -7,7 +7,7 @@
  *
  * Return: 1 if the operation was successful, -1 if it failed
  */
-int clear_bit_value(unsigned long int *n, unsigned int index)
+int clear_bit(unsigned long int *n, unsigned int index)
 {
 	if (index > 63)
 		return (-1);

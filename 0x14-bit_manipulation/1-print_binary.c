@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * print_binary_representation - Prints the binary representation
- * of a decimal number.
- * @decimal_num: The decimal number to be represented in binary.
+ * print_binary - Prints the binary equivalent of a decimal number.
+ * @n: the number to print in binary.
  */
-void print_binary_representation(unsigned long int decimal_num)
+void print_binary(unsigned long int n)
 {
 	/* Initialize variables */
-	int i, count = 0;
+	int i,
+	count = 0;
 	unsigned long int current;
 
 	/* Iterate through the bits of the decimal number */

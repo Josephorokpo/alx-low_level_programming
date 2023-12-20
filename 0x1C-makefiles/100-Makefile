@@ -1,0 +1,50 @@
+# Makefile for 'school' executable
+
+# Compiler
+CC = gcc
+
+# Source files
+SRC = main.c school.c
+
+# Target executable
+NAME = school
+
+# Compiler flags
+CFLAGS = -Wall -Werror -Wextra -pedantic
+
+# Command to delete files
+RM = rm -f
+
+# Default rule
+all: $(NAME)
+
+# Rule to build the executable
+$(NAME): $(SRC:.c=.o)
+	$(CC) $^ -o $@ $(CFLAGS)
+
+# Rule to build object files from source files
+%.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+# Rule to clean Emacs and Vim temporary files, executable, and object files
+clean:
+	$(RM) *~ $(NAME)
+
+# Rule to clean object files
+oclean:
+	$(RM) $(SRC:.c=.o)
+
+# Rule to clean Emacs and Vim temporary files, the executable, and object files
+fclean: clean oclean
+	$(RM) $(NAME)
+
+# Rule to force recompilation of all source files
+re: fclean all
+
+# Ensure that clean, oclean, fclean, re rules never fail
+.PHONY: all clean oclean fclean re
+
+# Check if header file m.h exists
+ifeq ($(wildcard m.h),)
+$(error "Header file m.h is missing.")
+endif

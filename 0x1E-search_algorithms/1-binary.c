@@ -30,23 +30,3 @@ int binary_search(int *array, size_t size, int value)
 
 	return (-1);
 }
-
-/**
- * print_array - Prints elements of an array between given indices
- * @array: Pointer to the first element of the array
- * @start: Starting index to print from
- * @end: Ending index to print till
- */
-void print_array(int *array, size_t start, size_t end)
-{
-	size_t i;
-
-	for (i = start; i <= end; i++)
-	{
-		printf("%d", array[i]);
-		if (i < end)
-			printf(", ");
-		else
-			printf("\n");
-	}
-}
